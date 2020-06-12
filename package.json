@@ -10,8 +10,7 @@
     "build:main": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "actions-toolkit": "2.1.0",
-    "jest-junit": "^6.4.0"
+    "actions-toolkit": "2.1.0"
   },
   "devDependencies": {
     "@octokit/rest": "16.28.1",

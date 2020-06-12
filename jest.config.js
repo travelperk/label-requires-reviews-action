@@ -8,7 +8,7 @@ module.exports = {
   coverageReporters: [
     'lcov',
   ],
-  reporters: ["default", "jest-junit"],
+  reporters: ["default"],
   globals: {
     __DEV__: true,
     'ts-jest': {
