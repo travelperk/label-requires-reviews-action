@@ -1,8 +1,8 @@
 import {
+  Rule,
   IssuesListLabelsOnIssueParams,
   PullsListReviewsParams
-} from '@octokit/rest'
-import { Rule } from '../src/types'
+} from '../src/types'
 import {
     getRulesForLabels,
     getMaxReviewNumber,

@@ -1,14 +1,13 @@
-import {
-  IssuesListLabelsOnIssueParams,
-  IssuesListLabelsOnIssueResponse,
-  PullsListReviewsParams,
-  PullsListReviewsResponse,
-  Response,
-} from '@octokit/rest'
 import { WebhookPayloadWithRepository } from 'actions-toolkit/lib/context'
 import { Exit } from 'actions-toolkit/lib/exit'
 import { LoggerFunc, Signale } from 'signale'
-import { Rule } from './types'
+import {
+  Rule,
+  IssuesListLabelsOnIssueParams,
+  IssuesListLabelsOnIssueResponse,
+  PullsListReviewsParams,
+  PullsListReviewsResponse
+} from './types'
 
 // Get the maximum number of reviews based on the configuration and the issue labels
 export const getRulesForLabels = async (
@@ -18,7 +17,7 @@ export const getRulesForLabels = async (
 ): Promise<Rule[]> => {
   return client.issues
     .listLabelsOnIssue(issuesListLabelsOnIssueParams)
-    .then(({ data: labels }: Response<IssuesListLabelsOnIssueResponse>) => {
+    .then(({ data: labels }: IssuesListLabelsOnIssueResponse) => {
       return labels.reduce((acc, label) => acc.concat(label.name), [])
     })
     .then((issueLabels: string[]) =>
@@ -57,7 +56,7 @@ export const getCurrentReviewCount = async (
 ): Promise<number> => {
   return client.pulls
     .listReviews(pullsListReviewsParams)
-    .then(({ data: reviews }: Response<PullsListReviewsResponse>) => {
+    .then(({ data: reviews }: PullsListReviewsResponse) => {
       return reviews.reduce(
         (acc, review) => (review.state === 'APPROVED' ? acc + 1 : acc),
         0

@@ -1,8 +1,4 @@
 import {
-  IssuesListLabelsOnIssueParams,
-  PullsListReviewsParams,
-} from '@octokit/rest'
-import {
   getRulesForLabels,
   getMaxReviewNumber,
   getCurrentReviewCount,
@@ -10,7 +6,11 @@ import {
 } from './main'
 import { Toolkit, ToolkitOptions } from 'actions-toolkit'
 import { GitHub } from 'actions-toolkit/lib/github'
-import { Rule } from './types'
+import {
+  Rule,
+  IssuesListLabelsOnIssueParams,
+  PullsListReviewsParams,
+} from './types'
 
 const args: ToolkitOptions = {
   event: [
