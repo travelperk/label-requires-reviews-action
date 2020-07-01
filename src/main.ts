@@ -6,7 +6,7 @@ import {
   IssuesListLabelsOnIssueParams,
   IssuesListLabelsOnIssueResponse,
   PullsListReviewsParams,
-  PullsListReviewsResponse
+  PullsListReviewsResponse,
 } from './types'
 
 // Get the maximum number of reviews based on the configuration and the issue labels
