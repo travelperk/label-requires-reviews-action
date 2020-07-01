@@ -7,7 +7,10 @@
     "start": "node ./build/entrypoint.js",
     "test": "jest --collect-coverage",
     "test:watch": "jest --watchAll",
-    "build:main": "tsc -p tsconfig.json"
+    "build:main": "tsc -p tsconfig.json",
+    "lint-staged": "lint-staged",
+    "prettier": "prettier",
+    "prettier:fix": "npm run prettier -- --write 'src/**/*.ts'"
   },
   "dependencies": {
     "actions-toolkit": "^5.0.0"
