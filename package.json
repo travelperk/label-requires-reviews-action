@@ -13,10 +13,10 @@
     "prettier:fix": "npm run prettier -- --write 'src/**/*.ts'"
   },
   "dependencies": {
-    "actions-toolkit": "^5.0.0"
+    "actions-toolkit": "2.2.0"
   },
   "devDependencies": {
-    "@octokit/rest": "^18.0.0",
+    "@octokit/rest": "16.28.1",
     "@types/jest": "^26.0.3",
     "awesome-typescript-loader": "^5.2.1",
     "babel-jest": "^26.1.0",
