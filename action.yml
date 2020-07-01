@@ -2,5 +2,5 @@ name: Label requires reviews
 author: TravelPerk <engineering@travelperk.com>
 description: This Github action will require a minimum number of reviews if a label is present.
 runs:
-  using: 'docker'
-  image: 'docker://travelperk/label-requires-reviews:0.0.1'
+  using: 'node12'
+  main: 'dist/index.js'
