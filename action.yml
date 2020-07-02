@@ -4,3 +4,9 @@ description: This Github action will require a minimum number of reviews if a la
 runs:
   using: 'node12'
   main: 'dist/index.js'
+
+inputs:
+  github_token:
+    description: 'Github token to authenticate Octokit'
+    required: true
+
