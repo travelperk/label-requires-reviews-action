@@ -1383,13 +1383,14 @@ exports.getRulesForLabels = async (issuesListLabelsOnIssueParams, client, rules)
 exports.getMaxReviewNumber = (rules) => rules.reduce((acc, rule) => (rule.reviews > acc ? rule.reviews : acc), 0);
 // Returns the repository information using provided gitHubEventPath
 exports.findRepositoryInformation = (gitHubEventPath, log, exit) => {
+    var _a;
     const payload = require(gitHubEventPath);
-    if (payload.number === undefined) {
-        exit.neutral('Action not triggered by a PullRequest action. PR ID is missing');
+    if (((_a = payload.pull_request) === null || _a === void 0 ? void 0 : _a.number) === undefined) {
+        exit.neutral('Action not triggered by a PullRequest review action. PR ID is missing');
     }
-    log.info(`Checking files list for PR#${payload.number}`);
+    log.info(`Checking labels for PR#${payload.pull_request.number}`);
     return {
-        issue_number: payload.number,
+        issue_number: payload.pull_request.number,
         owner: payload.repository.owner.login,
         repo: payload.repository.name,
     };
@@ -25477,7 +25478,7 @@ const args = {
         'pull_request.ready_for_review',
         'pull_request_review.submitted',
         'pull_request_review.edited',
-        'pull_request_review.dismissed',
+        'pull_request_review.dismissed'
     ],
     secrets: ['GITHUB_TOKEN'],
 };
