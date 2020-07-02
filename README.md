@@ -1,4 +1,4 @@
-# Label requires reviews actions
+# Label requires reviews action
 This is work in progress Github Action to require a minimum number of approving reviews on a Pull Request depending on the set of labels applied to it.
 
 ## Usage
@@ -26,15 +26,10 @@ Create a workflow (eg: `.github/workflows/label-reviews.yml` see [Creating a Wor
 name: Label Reviews
 # Trigger the workflow on pull requests
 on:
-  pull_request:
-    types:
-      - labeled
-      - unlabeled
-      - ready_for_review
   pull_request_review:
     types:
       - submitted
-      - edite_d
+      - edited
       - dismissed
 jobs:
   require-reviewers:
@@ -51,3 +46,12 @@ jobs:
 ```
 
 In order for the workflow to be able to perform actions on the Pull Request you'll need to set a `PERSONAL_ACCESS_TOKEN` secret on the repository see [Creating and storing encrypted secrets](https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets).
+
+### Enforce the requirement
+To make this check mandatory you need to specify it on the `Branch protection rule` section of the repository settings like the example:
+
+![Marking the action as required](https://user-images.githubusercontent.com/1571416/86369067-3d62ae80-bc7e-11ea-9b40-7c518e6c8a80.png)
+
+According to this configuration, the `master` branch is protected by the option `Required approving reviews` set to `1`. That means that any Pull Request that wants to merge code into master would have to be approved by at least one reviewer.
+
+By checking `Require status checks to pass before merging` and `require-reviewers` anytime the Pull Request gets a new review this action will fire and the Pull Request is labeled with one of the labels that require more than one approving review blocking the possibility of merging until this label required number of approving reviews is reached.
