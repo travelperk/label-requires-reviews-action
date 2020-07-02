@@ -56,7 +56,7 @@ Toolkit.run(async (toolkit: Toolkit) => {
 
   // Get the actual number of reviews from the issue
   const reviewCount: number = await getCurrentReviewCount(
-    <PullsListReviewsParams>{ owner, pull_number: issue_number, repo },
+    { owner, pull_number: issue_number, repo } as PullsListReviewsParams,
     client
   )
   if (reviewCount < requiredReviews) {
