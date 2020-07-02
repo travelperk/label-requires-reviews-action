@@ -36,14 +36,14 @@ export const findRepositoryInformation = (
   exit: Exit
 ): IssuesListLabelsOnIssueParams => {
   const payload: WebhookPayloadWithRepository = require(gitHubEventPath)
-  if (payload.number === undefined) {
+  if (payload.pull_request?.number === undefined) {
     exit.neutral(
-      'Action not triggered by a PullRequest action. PR ID is missing'
+      'Action not triggered by a PullRequest review action. PR ID is missing'
     )
   }
-  log.info(`Checking files list for PR#${payload.number}`)
+  log.info(`Checking labels for PR#${payload.pull_request.number}`)
   return {
-    issue_number: payload.number,
+    issue_number: payload.pull_request.number,
     owner: payload.repository.owner.login,
     repo: payload.repository.name,
   }
