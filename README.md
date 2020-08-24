@@ -1,4 +1,4 @@
-# Label requires reviews action [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=travelperk_label-requires-reviews-action&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=travelperk_label-requires-reviews-action)
+# Label requires reviews action [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=travelperk_label-requires-reviews-action&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=travelperk_label-requires-reviews-action) ![build](https://github.com/travelperk/label-requires-reviews-action/workflows/build/badge.svg)
 This is a Github Action to modify the required minimum number of approving reviews on a Pull Request depending on the set of labels applied to it.
 
 ## Usage
