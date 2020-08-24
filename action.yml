@@ -9,4 +9,7 @@ inputs:
   github_token:
     description: 'Github token to authenticate Octokit'
     required: true
+branding:
+  icon: 'user-check'  
+  color: 'green'
 
