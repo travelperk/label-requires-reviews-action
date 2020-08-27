@@ -30,7 +30,7 @@
     "husky": "^4.2.5",
     "jest": "^26.4.2",
     "lint-staged": "^10.2.13",
-    "prettier": "^2.1.0",
+    "prettier": "^2.1.1",
     "prettier-eslint": "^11.0.0",
     "signale": "^1.4.0",
     "source-map-loader": "^1.0.2",
