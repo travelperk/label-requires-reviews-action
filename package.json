@@ -29,7 +29,7 @@
     "eslint": "^7.9.0",
     "husky": "^4.3.0",
     "jest": "^26.4.2",
-    "lint-staged": "^10.3.0",
+    "lint-staged": "^10.4.0",
     "prettier": "^2.1.1",
     "prettier-eslint": "^11.0.0",
     "signale": "^1.4.0",
