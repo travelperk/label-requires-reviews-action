@@ -34,7 +34,7 @@
     "prettier-eslint": "^11.0.0",
     "signale": "^1.4.0",
     "source-map-loader": "^1.1.0",
-    "ts-jest": "^26.3.0",
+    "ts-jest": "^26.4.0",
     "typescript": "^3.9.7"
   },
   "lint-staged": {
