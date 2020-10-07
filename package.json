@@ -25,7 +25,7 @@
     "@types/jest": "^26.0.14",
     "@zeit/ncc": "^0.22.3",
     "awesome-typescript-loader": "^5.2.1",
-    "babel-jest": "^26.3.0",
+    "babel-jest": "^26.5.2",
     "eslint": "^7.10.0",
     "husky": "^4.3.0",
     "jest": "^26.5.2",
