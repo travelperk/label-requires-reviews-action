@@ -9,13 +9,13 @@
     "start": "node ./build/entrypoint.js",
     "test": "jest --collect-coverage",
     "test:watch": "jest --watchAll",
-    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json",
     "pack": "ncc build",
     "lint": "eslint --ext .js --ext .tsx --fix --max-warnings 0",
     "lint-staged": "lint-staged",
     "prettier": "prettier",
     "prettier:fix": "npm run prettier -- --write 'src/**/*.ts'",
-    "all": "npm run build && npm run prettier:fix && npm run lint && npm run pack && npm test"
+    "all": "npm run typecheck && npm run prettier:fix && npm run lint && npm run pack && npm test"
   },
   "dependencies": {
     "actions-toolkit": "2.2.0"
@@ -42,10 +42,5 @@
       "npm run lint",
       "npm run prettier -- --write"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   }
 }
