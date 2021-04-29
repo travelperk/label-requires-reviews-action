@@ -18,7 +18,7 @@
     "all": "npm run typecheck && npm run prettier:fix && npm run lint && npm run pack && npm test"
   },
   "dependencies": {
-    "actions-toolkit": "2.2.0"
+    "actions-toolkit": "6.0.1"
   },
   "devDependencies": {
     "@octokit/rest": "16.28.1",
