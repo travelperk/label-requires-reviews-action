@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@octokit/rest": "16.28.1",
-    "@types/jest": "^27.4.1",
+    "@types/jest": "^27.5.0",
     "@zeit/ncc": "^0.22.3",
     "awesome-typescript-loader": "^5.2.1",
     "babel-jest": "^28.0.3",
