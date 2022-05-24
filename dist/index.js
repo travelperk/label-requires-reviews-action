@@ -25478,7 +25478,8 @@ const args = {
         'pull_request.ready_for_review',
         'pull_request_review.submitted',
         'pull_request_review.edited',
-        'pull_request_review.dismissed'
+        'pull_request_review.dismissed',
+        'pull_request.synchronize'
     ],
     secrets: ['GITHUB_TOKEN'],
 };
