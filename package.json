@@ -21,7 +21,7 @@
     "actions-toolkit": "2.2.0"
   },
   "devDependencies": {
-    "@octokit/rest": "16.28.1",
+    "@octokit/rest": "19.0.5",
     "@types/jest": "^27.5.0",
     "@zeit/ncc": "^0.22.3",
     "awesome-typescript-loader": "^5.2.1",
