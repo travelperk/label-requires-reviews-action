@@ -33,15 +33,12 @@ Toolkit.run(async (toolkit: Toolkit) => {
   if (!process.env.GITHUB_EVENT_PATH) {
     toolkit.exit.failure('Process env GITHUB_EVENT_PATH is undefined')
   }
-  const {
-    owner,
-    issue_number,
-    repo,
-  }: IssuesListLabelsOnIssueParams = findRepositoryInformation(
-    process.env.GITHUB_EVENT_PATH,
-    toolkit.log,
-    toolkit.exit
-  )
+  const { owner, issue_number, repo }: IssuesListLabelsOnIssueParams =
+    findRepositoryInformation(
+      process.env.GITHUB_EVENT_PATH,
+      toolkit.log,
+      toolkit.exit
+    )
   const client: GitHub = toolkit.github
 
   // Get the list of configuration rules for the labels on the issue
