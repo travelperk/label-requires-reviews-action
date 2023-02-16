@@ -41,8 +41,8 @@ const getCurrentReviewCount = async (pullsListReviewsParams, client) => {
     return client.pulls
         .listReviews(pullsListReviewsParams)
         .then(({ data: reviews }) => {
-        let approvers = [];
-        for (let review of reviews) {
+        const approvers = [];
+        for (const review of reviews) {
             if (review.state === 'APPROVED' &&
                 !approvers.includes(review.user.id)) {
                 approvers.push(review.user.id);
