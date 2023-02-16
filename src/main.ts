@@ -49,7 +49,7 @@ export const findRepositoryInformation = (
   }
 }
 
-// Get the current review count from an issue
+// Get the current approver count from an issue
 export const getCurrentReviewCount = async (
   pullsListReviewsParams: PullsListReviewsParams,
   client
@@ -57,9 +57,20 @@ export const getCurrentReviewCount = async (
   return client.pulls
     .listReviews(pullsListReviewsParams)
     .then(({ data: reviews }: PullsListReviewsResponse) => {
-      return reviews.reduce(
-        (acc, review) => (review.state === 'APPROVED' ? acc + 1 : acc),
-        0
-      )
+      let approvers: Array<number> = []
+      for (let review of reviews) {
+        if (
+          review.state === 'APPROVED' &&
+          !approvers.includes(review.user.id)
+        ) {
+          approvers.push(review.user.id)
+        } else if (
+          review.state === 'CHANGES_REQUESTED' &&
+          approvers.includes(review.user.id)
+        ) {
+          approvers.splice(approvers.indexOf(review.user.id), 1)
+        }
+      }
+      return approvers.length
     })
 }

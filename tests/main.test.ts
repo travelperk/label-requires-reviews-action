@@ -34,9 +34,12 @@ const client = {
     pulls : {
         listReviews: jest.fn().mockResolvedValue({
             data: [
-                {state: "APPROVED"},
-                {state: "PENDING"},
-                {state: "APPROVED"},
+                {state: "CHANGES_REQUESTED", user: {id: 1}},
+                {state: "APPROVED", user: {id: 1}},
+                {state: "PENDING", user: {id: 2}},
+                {state: "APPROVED", user: {id: 3}},
+                {state: "APPROVED", user: {id: 4}},
+                {state: "CHANGES_REQUESTED", user: {id: 4}},
             ]
         })
     },
