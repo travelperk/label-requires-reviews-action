@@ -11,6 +11,9 @@ import {
   PullsListReviewsParams,
 } from './types'
 
+import YAML from 'yaml'
+import fs from 'fs'
+
 const args: ToolkitOptions = {
   event: [
     'pull_request.labeled',
@@ -25,7 +28,11 @@ const args: ToolkitOptions = {
 
 Toolkit.run(async (toolkit: Toolkit) => {
   toolkit.log.info('Running Action')
-  const rules: Rule[] = JSON.parse(toolkit.inputs.rules)
+  const configPath: string =
+    process.env.CONFIG_PATH ?? '.github/label-requires-reviews.yml'
+  const rules_yaml = fs.readFileSync(process.env.CONFIG_PATH, 'utf8')
+  console.log(rules_yaml)
+  const rules: Rule[] = YAML.parse(rules_yaml)
   toolkit.log.info('Configured rules: ', rules)
 
   // Get the repository information
