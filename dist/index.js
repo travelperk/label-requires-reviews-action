@@ -20496,6 +20496,8 @@ const main_1 = __nccwpck_require__(9538);
 const actions_toolkit_1 = __nccwpck_require__(7045);
 const args = {
     event: [
+        'pull_request.labeled',
+        'pull_request.unlabeled',
         'pull_request_review.submitted',
         'pull_request_review.edited',
         'pull_request_review.dismissed',
