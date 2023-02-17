@@ -5,7 +5,6 @@ import {
   findRepositoryInformation,
 } from './main'
 import { Toolkit, ToolkitOptions } from 'actions-toolkit'
-import { GitHub } from 'actions-toolkit/lib/github'
 import {
   Rule,
   IssuesListLabelsOnIssueParams,
@@ -24,9 +23,7 @@ const args: ToolkitOptions = {
 
 Toolkit.run(async (toolkit: Toolkit) => {
   toolkit.log.info('Running Action')
-  const configPath: string =
-    process.env.CONFIG_PATH ?? '.github/label-requires-reviews.yml'
-  const rules: Rule[] = toolkit.config(configPath)
+  const rules: Rule[] = JSON.parse(toolkit.inputs.rules)
   toolkit.log.info('Configured rules: ', rules)
 
   // Get the repository information
@@ -39,7 +36,7 @@ Toolkit.run(async (toolkit: Toolkit) => {
       toolkit.log,
       toolkit.exit
     )
-  const client: GitHub = toolkit.github
+  const client = toolkit.github
 
   // Get the list of configuration rules for the labels on the issue
   const matchingRules: Rule[] = await getRulesForLabels(
