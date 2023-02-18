@@ -30,8 +30,8 @@ Toolkit.run(async (toolkit: Toolkit) => {
   toolkit.log.info('Running Action')
   const configPath: string =
     process.env.CONFIG_PATH ?? '.github/label-requires-reviews.yml'
-  const rules_yaml = fs.readFileSync(configPath, 'utf8')
-  const rules: Rule[] = yaml.load(rules_yaml)
+  const rulesYaml = fs.readFileSync(configPath, 'utf8')
+  const rules: Rule[] = yaml.load(rulesYaml)
   toolkit.log.info('Configured rules: ', rules)
 
   // Get the repository information
