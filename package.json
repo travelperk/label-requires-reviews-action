@@ -24,7 +24,6 @@
   "devDependencies": {
     "@octokit/endpoint": "^7.0.5",
     "@octokit/rest": "16.28.1",
-    "@types/fs-extra": "^11.0.1",
     "@types/jest": "^29.4.0",
     "babel-jest": "^29.4.3",
     "eslint": "^8.34.0",
