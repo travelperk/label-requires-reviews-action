@@ -9,6 +9,8 @@ on:
       - dismissed
   pull_request:
     types:
+      - opened
+      - reopened
       - synchronize
       - labeled
       - unlabeled
@@ -17,8 +19,12 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
-
+      
       - name: Require reviewers
         uses: ./       
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          rules_yaml: | # Input variables must be strings, here a multi-line yaml string
+            typescript: 2
+            migration: 5

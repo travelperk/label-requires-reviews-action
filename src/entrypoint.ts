@@ -37,8 +37,23 @@ Toolkit.run(async (toolkit: Toolkit) => {
   toolkit.log.info('Running Action')
   const configPath: string =
     process.env.CONFIG_PATH ?? '.github/label-requires-reviews.yml'
-  const rulesYaml = fs.readFileSync(configPath, 'utf8')
-  const rules: Rule[] = yaml.load(rulesYaml)
+  const rules: Rule[] = []
+  const parseYamlRules = (rulesYaml: String) => {
+    const rulesObject = yaml.load(rulesYaml)
+    if (Array.isArray(rulesObject)) {
+      return rulesObject
+    } else {
+      return Object.entries(rulesObject).map(([key, value]) => {
+        return { label: key, reviews: value }
+      })
+    }
+  }
+  if (toolkit.inputs.rules_yaml) {
+    rules.push(...parseYamlRules(toolkit.inputs.rules_yaml))
+  }
+  if (fs.existsSync(configPath)) {
+    rules.push(...parseYamlRules(fs.readFileSync(configPath, 'utf8')))
+  }
   toolkit.log.info('Configured rules: ', rules)
 
   // Get the repository information

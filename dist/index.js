@@ -36,8 +36,24 @@ actions_toolkit_1.Toolkit.run(async (toolkit) => {
     var _a;
     toolkit.log.info('Running Action');
     const configPath = (_a = process.env.CONFIG_PATH) !== null && _a !== void 0 ? _a : '.github/label-requires-reviews.yml';
-    const rulesYaml = fs_1.default.readFileSync(configPath, 'utf8');
-    const rules = js_yaml_1.default.load(rulesYaml);
+    const rules = [];
+    const parseYamlRules = (rulesYaml) => {
+        const rulesObject = js_yaml_1.default.load(rulesYaml);
+        if (Array.isArray(rulesObject)) {
+            return rulesObject;
+        }
+        else {
+            return Object.entries(rulesObject).map(([key, value]) => {
+                return { label: key, reviews: value };
+            });
+        }
+    };
+    if (toolkit.inputs.rules_yaml) {
+        rules.push(...parseYamlRules(toolkit.inputs.rules_yaml));
+    }
+    if (fs_1.default.existsSync(configPath)) {
+        rules.push(...parseYamlRules(fs_1.default.readFileSync(configPath, 'utf8')));
+    }
     toolkit.log.info('Configured rules: ', rules);
     // Get the repository information
     if (!process.env.GITHUB_EVENT_PATH) {
