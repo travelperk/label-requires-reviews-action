@@ -16,12 +16,19 @@ const js_yaml_1 = __importDefault(__nccwpck_require__(1917));
 const fs_1 = __importDefault(__nccwpck_require__(7147));
 const args = {
     event: [
+        'pull_request.opened',
+        'pull_request.reopened',
         'pull_request.labeled',
         'pull_request.unlabeled',
+        'pull_request.synchronize',
+        'pull_request_target.opened',
+        'pull_request_target.reopened',
+        'pull_request_target.labeled',
+        'pull_request_target.unlabeled',
+        'pull_request_target.synchronize',
         'pull_request_review.submitted',
         'pull_request_review.edited',
         'pull_request_review.dismissed',
-        'pull_request.synchronize',
     ],
     secrets: ['GITHUB_TOKEN'],
 };
