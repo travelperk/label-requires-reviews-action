@@ -1,6 +1,4 @@
-# This workflow will set a number or reviewers depending on the tags
 name: Label Reviews
-# Trigger the workflow on pull requests
 on:
   pull_request_review:
     types:
@@ -9,16 +7,23 @@ on:
       - dismissed
   pull_request:
     types:
+      - opened
+      - reopened
       - synchronize
       - labeled
       - unlabeled
 jobs:
   require-reviewers:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Require reviewers
+      # This workflow uses the current version of the action, so requires a checkout to make it run
+      - name: Checkout current version of action
+        uses: actions/checkout@v2
+      - name: Run action on current PR
         uses: ./       
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          rules_yaml: |
+            typescript: 2
+            migration: 5

@@ -3,29 +3,21 @@ This is a Github Action to modify the required minimum number of approving revie
 
 ## Usage
 
-### Create `.github/label-requires-reviews.yml`
-
-Create a `.github/label-requires-reviews.yml` file containing the pairs of `label` and `reviews`. `lablel` is the name of the label that will be checked on the Pull Request and `reviews` the number of approved reviews needed on the Pull Request for the action to return a success value. In case of having several matching tags the highest number will apply.
-
-Here is an example:
-
-```yml
-- label: "typescript"
-  reviews: 2
-- label: "migration"
-  reviews: 5
-```
-
-With that configuration this check will fail on a Pull Request that has the `typescript` tag until two or more approving reviews have been added. If instead the Pull Request has the `migration` tag  it will require five, in case both tags are present it will also require five.
-
 ### Create workflow
 Create a workflow (eg: `.github/workflows/label-reviews.yml` see [Creating a Workflow file](https://help.github.com/en/articles/configuring-a-workflow#creating-a-workflow-file)) to utilize this action with content:
 
 ```yml
-# This workflow will set a number or reviewers depending on the tags
+# This workflow will set a number or reviewers depending on the labels
 name: Label Reviews
 # Trigger the workflow on pull requests
 on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - labeled
+      - unlabeled
   pull_request_review:
     types:
       - submitted
@@ -33,20 +25,21 @@ on:
       - dismissed
 jobs:
   require-reviewers:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        with:
-          ref: master
-
       - name: Require-reviewers
-        uses: travelperk/label-requires-reviews-action@v0.1
+        uses: travelperk/label-requires-reviews-action@v1.4.0
         env:
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          rules_yaml: | # define which PR labels require how many aprroving reviewers
+            typescript: 2
+            migration: 5
 ```
 
-In order for the workflow to be able to perform actions on the Pull Request you'll need to set a `PERSONAL_ACCESS_TOKEN` secret on the repository see [Creating and storing encrypted secrets](https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets).
+`rules_yaml` is a (yaml-formatted multi-line) string of pairs `label`: `# of approving reviewers`. With the example configuration above, this check will fail on a Pull Request that has the `typescript` label until two or more reviewers have approved it. If instead the Pull Request has the `migration` label it will require five, in case both labels are present it will also require five.
 
+`rules_yaml` also supports an array of objects format, as well as being defined in an external file (but then the workflow also needs a checkout step), see documentation of earlier versions https://github.com/travelperk/label-requires-reviews-action/tree/1.3.0#readme.
 ### Enforce the requirement
 To make this check mandatory you need to specify it on the `Branch protection rule` section of the repository settings like the example:
 
