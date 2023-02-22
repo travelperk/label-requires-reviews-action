@@ -1,0 +1,24 @@
+# This workflow will set a number or reviewers depending on the tags
+name: Label Reviews
+# Trigger the workflow on pull requests
+on:
+  pull_request_review:
+    types:
+      - submitted
+      - edited
+      - dismissed
+  pull_request:
+    types:
+      - synchronize
+      - labeled
+      - unlabeled
+jobs:
+  require-reviewers:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Require reviewers
+        uses: ./       
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -5,19 +5,30 @@ import {
   findRepositoryInformation,
 } from './main'
 import { Toolkit, ToolkitOptions } from 'actions-toolkit'
-import { GitHub } from 'actions-toolkit/lib/github'
 import {
   Rule,
   IssuesListLabelsOnIssueParams,
   PullsListReviewsParams,
 } from './types'
 
+import yaml from 'js-yaml'
+import fs from 'fs'
+
 const args: ToolkitOptions = {
   event: [
+    'pull_request.opened',
+    'pull_request.reopened',
+    'pull_request.labeled',
+    'pull_request.unlabeled',
+    'pull_request.synchronize',
+    'pull_request_target.opened',
+    'pull_request_target.reopened',
+    'pull_request_target.labeled',
+    'pull_request_target.unlabeled',
+    'pull_request_target.synchronize',
     'pull_request_review.submitted',
     'pull_request_review.edited',
     'pull_request_review.dismissed',
-    'pull_request.synchronize',
   ],
   secrets: ['GITHUB_TOKEN'],
 }
@@ -26,7 +37,8 @@ Toolkit.run(async (toolkit: Toolkit) => {
   toolkit.log.info('Running Action')
   const configPath: string =
     process.env.CONFIG_PATH ?? '.github/label-requires-reviews.yml'
-  const rules: Rule[] = toolkit.config(configPath)
+  const rulesYaml = fs.readFileSync(configPath, 'utf8')
+  const rules: Rule[] = yaml.load(rulesYaml)
   toolkit.log.info('Configured rules: ', rules)
 
   // Get the repository information
@@ -39,7 +51,7 @@ Toolkit.run(async (toolkit: Toolkit) => {
       toolkit.log,
       toolkit.exit
     )
-  const client: GitHub = toolkit.github
+  const client = toolkit.github
 
   // Get the list of configuration rules for the labels on the issue
   const matchingRules: Rule[] = await getRulesForLabels(
