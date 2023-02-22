@@ -25,6 +25,10 @@ on:
       - dismissed
 jobs:
   require-reviewers:
+    # Optional: skip check if no relevant label is present
+    # This needs to be kept in sync with the labels being checked
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'typescript') || contains(github.event.pull_request.labels.*.name, 'migration') }}
+
     runs-on: ubuntu-latest
     steps:
       - name: Require-reviewers
@@ -49,9 +53,3 @@ According to this configuration, the `master` branch is protected by the option 
 
 By checking `Require status checks to pass before merging` and `require-reviewers` anytime the Pull Request gets a new review this action will fire and the Pull Request is labeled with one of the labels that require more than one approving review blocking the possibility of merging until this label required number of approving reviews is reached.
 
-### Saving tip
-Since Github Workflow [jobs can have conditionals](https://github.blog/changelog/2019-10-01-github-actions-new-workflow-syntax-features/), and in the workflow you can [directly access some action metadata](https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#contexts).
-
-You can avoid checking out the code and running this action if you know the issue does not contain any of the labels that will trigger it, that will set the action as skipped and will never run.
-
-The drawback is that the list of labels will be duplicated, but you can save a lot of actions time.
