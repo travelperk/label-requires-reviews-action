@@ -38,7 +38,7 @@ Toolkit.run(async (toolkit: Toolkit) => {
   const configPath: string =
     process.env.CONFIG_PATH ?? '.github/label-requires-reviews.yml'
   const rules: Rule[] = []
-  const parseYamlRules = (rulesYaml: String) => {
+  const parseYamlRules = (rulesYaml: string) => {
     const rulesObject = yaml.load(rulesYaml)
     if (Array.isArray(rulesObject)) {
       return rulesObject
