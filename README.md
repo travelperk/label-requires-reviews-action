@@ -25,6 +25,9 @@ on:
       - dismissed
 jobs:
   require-reviewers:
+    # Optional: skip check if no relevant label is present
+    # This needs to be kept in sync with the labels being checked
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'typescript') || contains(github.event.pull_request.labels.*.name, 'migration') }}
     runs-on: ubuntu-latest
     steps:
       - name: Require-reviewers
@@ -39,7 +42,7 @@ jobs:
 
 `rules_yaml` is a (yaml-formatted multi-line) string of pairs `label`: `# of approving reviewers`. With the example configuration above, this check will fail on a Pull Request that has the `typescript` label until two or more reviewers have approved it. If instead the Pull Request has the `migration` label it will require five, in case both labels are present it will also require five.
 
-`rules_yaml` also supports an array of objects format, as well as being defined in an external file (but then the workflow also needs a checkout step), see documentation of earlier versions https://github.com/travelperk/label-requires-reviews-action/tree/1.3.0#readme.
+`rules_yaml` also supports an array of objects format, as well as being defined in an external file (but then the workflow also needs a checkout step), see documentation of [versions earlier than `1.3.0`](https://github.com/travelperk/label-requires-reviews-action/tree/1.2.1#readme).
 ### Enforce the requirement
 To make this check mandatory you need to specify it on the `Branch protection rule` section of the repository settings like the example:
 
