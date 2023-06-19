@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@octokit/endpoint": "^7.0.5",
-    "@octokit/rest": "16.28.1",
+    "@octokit/rest": "19.0.13",
     "@types/jest": "^29.5.2",
     "babel-jest": "^29.5.0",
     "eslint": "^8.41.0",
