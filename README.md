@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Require-reviewers
-        uses: travelperk/label-requires-reviews-action@v1.3.0
+        uses: travelperk/label-requires-reviews-action@1.3.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
