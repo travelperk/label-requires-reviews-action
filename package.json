@@ -22,7 +22,7 @@
     "actions-toolkit": "^6.0.1"
   },
   "devDependencies": {
-    "@octokit/endpoint": "^8.0.1",
+    "@octokit/endpoint": "^9.0.0",
     "@octokit/rest": "16.28.1",
     "@types/jest": "^29.5.2",
     "babel-jest": "^29.6.1",
