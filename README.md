@@ -1,4 +1,4 @@
-# Label requires reviews action [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=travelperk_label-requires-reviews-action&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=travelperk_label-requires-reviews-action) [![build](https://github.com/travelperk/label-requires-reviews-action/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/travelperk/label-requires-reviews-action/actions/workflows/build.yml) 
+# Label requires reviews action [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=travelperk_label-requires-reviews-action&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=travelperk_label-requires-reviews-action) [![build](https://github.com/travelperk/label-requires-reviews-action/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/travelperk/label-requires-reviews-action/actions/workflows/build.yml)
 This is a Github Action to modify the required minimum number of approving reviews on a Pull Request depending on the set of labels applied to it.
 
 ## Usage
@@ -48,7 +48,7 @@ To make this check mandatory you need to specify it on the `Branch protection ru
 
 ![Marking the action as required](https://user-images.githubusercontent.com/1571416/86369067-3d62ae80-bc7e-11ea-9b40-7c518e6c8a80.png)
 
-According to this configuration, the `master` branch is protected by the option `Required approving reviews` set to `1`. That means that any Pull Request that wants to merge code into master would have to be approved by at least one reviewer.
+According to this configuration, the `main` branch is protected by the option `Required approving reviews` set to `1`. That means that any Pull Request that wants to merge code into main would have to be approved by at least one reviewer.
 
 By checking `Require status checks to pass before merging` and `require-reviewers` anytime the Pull Request gets a new review this action will fire and the Pull Request is labeled with one of the labels that require more than one approving review blocking the possibility of merging until this label required number of approving reviews is reached.
 
