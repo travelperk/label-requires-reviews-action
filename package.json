@@ -1,6 +1,6 @@
 {
   "name": "label-requires-reviews-action",
-  "version": "0.0.1",
+  "version": "2.0.0",
   "author": "Travelperk Engineering <engineering@travelperk.com>",
   "license": "MIT",
   "description": "Require a number of reviews for a certain label",
