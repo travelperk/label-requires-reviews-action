@@ -2,7 +2,7 @@ name: Label requires reviews
 author: TravelPerk <engineering@travelperk.com>
 description: This Github action will require a minimum number of reviews if a label is present.
 runs:
-  using: 'node12'
+  using: 'node20'
   main: 'dist/index.js'
 
 inputs:
