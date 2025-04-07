@@ -12,9 +12,7 @@ jobs:
       with:
         node-version: 20.9.0
         cache: 'npm'
-    - name: Dry-run install to see what would be fetched
-      run: npm install --dry-run
     - run: |
-        rm -f ~/.npmrc
+        find . -type f -name '.npmrc' -delete
         npm install
         npm run all
