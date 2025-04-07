@@ -12,6 +12,12 @@ jobs:
       with:
         node-version: 20.9.0
         cache: 'npm'
+    - name: Debug npm config
+      run: |
+        echo "====== npm config list ======"
+        npm config list
+        echo "====== npm whoami (check auth) ======"
+        npm whoami || echo "Not authenticated"
     - run: |
         rm -f ~/.npmrc
         npm install
