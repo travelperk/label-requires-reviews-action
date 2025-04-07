@@ -25,6 +25,7 @@
     "@octokit/endpoint": "^10.1.4",
     "@octokit/rest": "16.28.1",
     "@types/jest": "^29.5.14",
+    "@types/node": "^22.14.0",
     "babel-jest": "^29.7.0",
     "eslint": "^8.57.0",
     "husky": "^9.1.6",

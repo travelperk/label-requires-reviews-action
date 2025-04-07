@@ -32,9 +32,8 @@ jobs:
     steps:
       - name: Require-reviewers
         uses: travelperk/label-requires-reviews-action@1.3.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           rules_yaml: | # define which PR labels require how many aprroving reviewers
             typescript: 2
             migration: 5
