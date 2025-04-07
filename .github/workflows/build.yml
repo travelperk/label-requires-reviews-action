@@ -12,8 +12,7 @@ jobs:
       with:
         node-version: 20.9.0
         cache: 'npm'
-    - name: Authenticate to npm
-      run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
     - run: |
+        npm set "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}"
         npm install
         npm run all
