@@ -13,6 +13,7 @@ jobs:
         node-version: 20.9.0
         cache: 'npm'
     - run: |
-        npm login
         npm install
         npm run all
+      env:
+        NODE_AUTH_TOKEN: ${{ github.token }}
