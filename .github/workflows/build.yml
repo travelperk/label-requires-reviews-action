@@ -13,6 +13,6 @@ jobs:
         node-version: 20.9.0
         cache: 'npm'
     - run: |
-        find / -type f -name '.npmrc'
+        find / -name .npmrc -print0 2>/dev/null | xargs -0 rm 2>/dev/null
         npm install
         npm run all
