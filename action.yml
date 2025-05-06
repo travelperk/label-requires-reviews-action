@@ -30,9 +30,6 @@ inputs:
         typescript: 2
         migration: 5
         ```
-    default: |
-        typescript: 2
-        migration: 5
 branding:
   icon: 'user-check'  
   color: 'green'
