@@ -15,6 +15,7 @@ import yaml from 'js-yaml'
 import fs from 'fs'
 
 const args: ToolkitOptions = {
+  token: process.env.token,
   event: [
     'pull_request.opened',
     'pull_request.reopened',
