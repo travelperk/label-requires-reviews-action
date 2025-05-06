@@ -15,6 +15,7 @@ const actions_toolkit_1 = __nccwpck_require__(7045);
 const js_yaml_1 = __importDefault(__nccwpck_require__(1917));
 const fs_1 = __importDefault(__nccwpck_require__(7147));
 const args = {
+    token: process.env.token,
     event: [
         'pull_request.opened',
         'pull_request.reopened',
@@ -30,7 +31,7 @@ const args = {
         'pull_request_review.edited',
         'pull_request_review.dismissed',
     ],
-    secrets: ['GITHUB_TOKEN'],
+    secrets: ['token'],
 };
 actions_toolkit_1.Toolkit.run(async (toolkit) => {
     var _a;
