@@ -37,7 +37,7 @@
     "source-map-loader": "^5.0.0",
     "ts-jest": "^29.4.0",
     "ts-loader": "^9.5.2",
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.2"
   },
   "lint-staged": {
     "src/**/*.(.ts)": [
