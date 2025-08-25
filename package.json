@@ -36,7 +36,7 @@
     "signale": "^1.4.0",
     "source-map-loader": "^5.0.0",
     "ts-jest": "^29.4.0",
-    "ts-loader": "^9.5.2",
+    "ts-loader": "^9.5.4",
     "typescript": "^5.8.3"
   },
   "lint-staged": {
