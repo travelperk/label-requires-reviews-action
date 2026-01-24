@@ -11,3 +11,4 @@ minimumReleaseAgeExclude:
 
 # pnpm v10 can block install scripts unless explicitly allowed.
 allowBuilds:
+  husky: true
