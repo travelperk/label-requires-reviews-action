@@ -14,8 +14,8 @@
     "lint": "eslint --ext .js --ext .tsx --fix --max-warnings 0",
     "lint-staged": "lint-staged",
     "prettier": "prettier",
-    "prettier:fix": "npm run prettier -- --write 'src/**/*.ts'",
-    "all": "npm run typecheck && npm run prettier:fix && npm run lint && npm run pack && npm test"
+    "prettier:fix": "pnpm run prettier -- --write 'src/**/*.ts'",
+    "all": "pnpm run typecheck && npm run prettier:fix && npm run lint && npm run pack && npm test"
   },
   "dependencies": {
     "@vercel/ncc": "^0.38.2",
@@ -44,5 +44,18 @@
       "npm run lint",
       "npm run prettier -- --write"
     ]
+  },
+  "pnpm": {
+    "overrides": {
+      "@octokit/plugin-paginate-rest": "9.2.2",
+      "@octokit/request": "8.4.1",
+      "@octokit/request-error": "5.1.1",
+      "lodash": "4.17.23",
+      "undici": "6.23.0"
+    }
+  },
+  "packageManager": "pnpm@10.27.0",
+  "engines": {
+    "node": "20.19.6"
   }
 }
