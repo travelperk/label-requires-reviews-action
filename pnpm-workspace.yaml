@@ -1,0 +1,14 @@
+# legacy-peer-deps=true (closest equivalent in pnpm)
+strictPeerDependencies: false # (this is already pnpm's default)
+
+# pnpm controls this via savePrefix; empty string means “save exact” (no ^/~ prefix).
+savePrefix: ""
+nodeLinker: hoisted
+
+minimumReleaseAge: 20160 # 20 days
+minimumReleaseAgeExclude:
+  - "lodash@4.17.23"
+
+# pnpm v10 can block install scripts unless explicitly allowed.
+allowBuilds:
+  husky: true
