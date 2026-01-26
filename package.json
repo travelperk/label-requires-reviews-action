@@ -14,8 +14,8 @@
     "lint": "eslint --ext .js --ext .tsx --fix --max-warnings 0",
     "lint-staged": "lint-staged",
     "prettier": "prettier",
-    "prettier:fix": "pnpm run prettier -- --write 'src/**/*.ts'",
-    "all": "pnpm run typecheck && npm run prettier:fix && npm run lint && npm run pack && npm test"
+    "prettier:fix": "prettier --write \"src/**/*.ts\"",
+    "all": "pnpm run typecheck && pnpm run prettier:fix && pnpm run lint && pnpm run pack && pnpm run test"
   },
   "dependencies": {
     "@vercel/ncc": "^0.38.2",
@@ -40,9 +40,9 @@
     "typescript": "^5.8.3"
   },
   "lint-staged": {
-    "src/**/*.(.ts)": [
+    "src/**/*.ts": [
       "npm run lint",
-      "npm run prettier -- --write"
+      "prettier --write"
     ]
   },
   "pnpm": {
