@@ -5,9 +5,11 @@ strictPeerDependencies: false # (this is already pnpm's default)
 savePrefix: ""
 nodeLinker: hoisted
 
-minimumReleaseAge: 20160 # 20 days
 minimumReleaseAgeExclude:
-  - "lodash@4.17.23"
+  - "undici@6.24.0" # Required for vulnerabiliti mitigation. Remove after 25/04/26
+  - "minimatch@9.0.7" # Required for vulnerabiliti mitigation. Remove after 25/04/26
+  - "flatted@3.3.4" # Required for vulnerabiliti mitigation. Remove after 25/04/26
+  - "serialize-javascript@7.0.3" # Required for vulnerabiliti mitigation. Remove after 25/04/26
 
 # pnpm v10 can block install scripts unless explicitly allowed.
 allowBuilds:
