@@ -51,7 +51,11 @@
       "@octokit/request": "8.4.1",
       "@octokit/request-error": "5.1.1",
       "lodash": "4.17.23",
-      "undici": "6.23.0"
+      "undici": "6.24.0",
+      "minimatch@9": "9.0.7",
+      "serialize-javascript": "7.0.3",
+      "ajv@8": "8.18.0",
+      "flatted": "3.3.4"
     }
   },
   "packageManager": "pnpm@10.27.0",
