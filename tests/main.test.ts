@@ -34,12 +34,13 @@ const client = {
     pulls : {
         listReviews: jest.fn().mockResolvedValue({
             data: [
-                {state: "CHANGES_REQUESTED", user: {id: 1}},
-                {state: "APPROVED", user: {id: 1}},
-                {state: "PENDING", user: {id: 2}},
-                {state: "APPROVED", user: {id: 3}},
-                {state: "APPROVED", user: {id: 4}},
-                {state: "CHANGES_REQUESTED", user: {id: 4}},
+                {state: "CHANGES_REQUESTED", user: {id: 1, type: "User"}},
+                {state: "APPROVED", user: {id: 1, type: "User"}},
+                {state: "PENDING", user: {id: 2, type: "User"}},
+                {state: "APPROVED", user: {id: 3, type: "User"}},
+                {state: "APPROVED", user: {id: 4, type: "User"}},
+                {state: "CHANGES_REQUESTED", user: {id: 4, type: "User"}},
+                {state: "APPROVED", user: {id: 5, type: "Bot"}},
             ]
         })
     },
@@ -75,4 +76,18 @@ describe('getCurrentReviewCount', () => {
   it('should return the number of approved reviews',
       async () => expect(await getCurrentReviewCount(LIST_REVIEWS_PARAMS, client)).toStrictEqual(2)
   )
+
+  it('should not count bot approvals toward the review threshold', async () => {
+    const botClient = {
+      pulls: {
+        listReviews: jest.fn().mockResolvedValue({
+          data: [
+            {state: "APPROVED", user: {id: 1, type: "User"}},
+            {state: "APPROVED", user: {id: 2, type: "Bot"}},
+          ]
+        })
+      }
+    }
+    expect(await getCurrentReviewCount(LIST_REVIEWS_PARAMS, botClient)).toStrictEqual(1)
+  })
 })
