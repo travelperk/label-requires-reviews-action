@@ -61,11 +61,13 @@ export const getCurrentReviewCount = async (
       for (const review of reviews) {
         if (
           review.state === 'APPROVED' &&
+          review.user.type !== 'Bot' &&
           !approvers.includes(review.user.id)
         ) {
           approvers.push(review.user.id)
         } else if (
           review.state === 'CHANGES_REQUESTED' &&
+          review.user.type !== 'Bot' &&
           approvers.includes(review.user.id)
         ) {
           approvers.splice(approvers.indexOf(review.user.id), 1)
