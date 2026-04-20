@@ -54,9 +54,9 @@ export const getCurrentReviewCount = async (
   pullsListReviewsParams: PullsListReviewsParams,
   client
 ): Promise<number> => {
-  return client.pulls
-    .listReviews(pullsListReviewsParams)
-    .then(({ data: reviews }: PullsListReviewsResponse) => {
+  return client
+    .paginate(client.pulls.listReviews, pullsListReviewsParams)
+    .then((reviews: PullsListReviewsResponse['data']) => {
       const approvers: Array<number> = []
       for (const review of reviews) {
         if (
@@ -68,7 +68,10 @@ export const getCurrentReviewCount = async (
           review.state === 'CHANGES_REQUESTED' &&
           approvers.includes(review.user.id)
         ) {
-          approvers.splice(approvers.indexOf(review.user.id), 1)
+          const index = approvers.indexOf(review.user.id)
+          if (index !== -1) {
+            approvers.splice(index, 1)
+          }
         }
       }
       return approvers.length

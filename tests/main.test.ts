@@ -32,17 +32,9 @@ const client = {
         })
     },
     pulls : {
-        listReviews: jest.fn().mockResolvedValue({
-            data: [
-                {state: "CHANGES_REQUESTED", user: {id: 1}},
-                {state: "APPROVED", user: {id: 1}},
-                {state: "PENDING", user: {id: 2}},
-                {state: "APPROVED", user: {id: 3}},
-                {state: "APPROVED", user: {id: 4}},
-                {state: "CHANGES_REQUESTED", user: {id: 4}},
-            ]
-        })
+        listReviews: jest.fn()
     },
+    paginate: jest.fn().mockImplementation((method, params) => method(params))
 }
 
 describe('getRulesForLabels', () => {
@@ -73,6 +65,16 @@ describe('findRepositoryInformation', () => {
 
 describe('getCurrentReviewCount', () => {
   it('should return the number of approved reviews',
-      async () => expect(await getCurrentReviewCount(LIST_REVIEWS_PARAMS, client)).toStrictEqual(2)
+      async () => {
+          (client.pulls.listReviews as jest.Mock).mockResolvedValue([
+                {state: "CHANGES_REQUESTED", user: {id: 1}},
+                {state: "APPROVED", user: {id: 1}},
+                {state: "PENDING", user: {id: 2}},
+                {state: "APPROVED", user: {id: 3}},
+                {state: "APPROVED", user: {id: 4}},
+                {state: "CHANGES_REQUESTED", user: {id: 4}},
+          ]);
+          expect(await getCurrentReviewCount(LIST_REVIEWS_PARAMS, client)).toStrictEqual(2)
+      }
   )
 })
