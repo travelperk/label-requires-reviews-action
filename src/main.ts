@@ -41,7 +41,7 @@ export const findRepositoryInformation = (
       'Action not triggered by a PullRequest review action. PR ID is missing'
     )
   }
-  log.info(`Checking labels for PR#${payload.pull_request.number}`)
+  log.info(`Checking labels for PR#\${payload.pull_request.number}`)
   return {
     issue_number: payload.pull_request.number,
     owner: payload.repository.owner.login,
@@ -54,9 +54,9 @@ export const getCurrentReviewCount = async (
   pullsListReviewsParams: PullsListReviewsParams,
   client
 ): Promise<number> => {
-  return client.pulls
-    .listReviews(pullsListReviewsParams)
-    .then(({ data: reviews }: PullsListReviewsResponse) => {
+  return client
+    .paginate(client.pulls.listReviews, pullsListReviewsParams)
+    .then((reviews: PullsListReviewsResponse['data']) => {
       const approvers: Array<number> = []
       for (const review of reviews) {
         if (
@@ -68,7 +68,10 @@ export const getCurrentReviewCount = async (
           review.state === 'CHANGES_REQUESTED' &&
           approvers.includes(review.user.id)
         ) {
-          approvers.splice(approvers.indexOf(review.user.id), 1)
+          const index = approvers.indexOf(review.user.id)
+          if (index !== -1) {
+            approvers.splice(index, 1)
+          }
         }
       }
       return approvers.length
