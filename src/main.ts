@@ -41,7 +41,7 @@ export const findRepositoryInformation = (
       'Action not triggered by a PullRequest review action. PR ID is missing'
     )
   }
-  log.info(`Checking labels for PR#\${payload.pull_request.number}`)
+  log.info(`Checking labels for PR#${payload.pull_request.number}`)
   return {
     issue_number: payload.pull_request.number,
     owner: payload.repository.owner.login,
