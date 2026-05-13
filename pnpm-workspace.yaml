@@ -1,16 +1,42 @@
-# legacy-peer-deps=true (closest equivalent in pnpm)
-strictPeerDependencies: false # (this is already pnpm's default)
-
-# pnpm controls this via savePrefix; empty string means “save exact” (no ^/~ prefix).
-savePrefix: ""
+saveExact: true
+autoInstallPeers: true
+sideEffectsCache: false # https://docs.cypress.io/app/get-started/install-cypress#pnpm-configuration
+disallowWorkspaceCycles: true
+engineStrict: true
+verifyStoreIntegrity: true
+minimumReleaseAge: 28800 # 20 days in minutes
+strictDepBuilds: true
+blockExoticSubdeps: true
+resolutionMode: time-based
+ignoreScripts: true
 nodeLinker: hoisted
+lockfileIncludeTarballUrl: true
+
+onlyBuiltDependencies: []
+
+trustPolicy: no-downgrade
+trustPolicyExclude: []
+
+# list here any version that you want to force to be used for vulnerabilities (and remove them once are not necessary anymore)
+overrides:
 
 minimumReleaseAgeExclude:
-  - "undici@6.24.0" # Required for vulnerabiliti mitigation. Remove after 25/04/26
-  - "minimatch@9.0.7" # Required for vulnerabiliti mitigation. Remove after 25/04/26
-  - "flatted@3.3.4" # Required for vulnerabiliti mitigation. Remove after 25/04/26
-  - "serialize-javascript@7.0.3" # Required for vulnerabiliti mitigation. Remove after 25/04/26
+  # internal libs
+  - '@travelperksl/*'
+  - '@yokoy/*'
+  - '@yokoy-*'
+  - 'yokoy-*'
+  - '@travel.cloud/*'
+  - '@travel-cloud/*'
 
-# pnpm v10 can block install scripts unless explicitly allowed.
+  - 'cypress@15.14.2'
+  - 'systeminformation@5.31.6'
+  - 'undici@6.24.0' # Required for vulnerabiliti mitigation. Remove after 25/04/26
+  - 'minimatch@9.0.7' # Required for vulnerabiliti mitigation. Remove after 25/04/26
+  - 'flatted@3.3.4' # Required for vulnerabiliti mitigation. Remove after 25/04/26
+  - 'serialize-javascript@7.0.3' # Required for vulnerabiliti mitigation. Remove after 25/04/26
+
 allowBuilds:
+  core-js-pure: true
+  cypress: true
   husky: true
