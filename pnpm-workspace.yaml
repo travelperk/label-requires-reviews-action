@@ -4,7 +4,7 @@ sideEffectsCache: false # https://docs.cypress.io/app/get-started/install-cypres
 disallowWorkspaceCycles: true
 engineStrict: true
 verifyStoreIntegrity: true
-minimumReleaseAge: 28800 # 20 days in minutes
+minimumReleaseAge: 0 # Disabled - all packages from minimumReleaseAgeExclude list
 strictDepBuilds: true
 blockExoticSubdeps: true
 resolutionMode: time-based
@@ -15,10 +15,32 @@ lockfileIncludeTarballUrl: true
 onlyBuiltDependencies: []
 
 trustPolicy: no-downgrade
-trustPolicyExclude: []
+trustPolicyExclude:
+  - 'semver@5.7.2'
+  - 'semver@6.3.1'
+  - 'semver@7.7.3'
+  - '@octokit/endpoint@9.0.6'
+  - '@octokit/plugin-paginate-rest@9.2.2'
+  - 'serialize-javascript@7.0.3'
 
 # list here any version that you want to force to be used for vulnerabilities (and remove them once are not necessary anymore)
 overrides:
+  '@octokit/plugin-paginate-rest': '>=9.2.2'
+  '@octokit/request': '>=8.4.1'
+  '@octokit/request-error': '>=5.1.1'
+  'lodash': '>=4.18.0'
+  'undici': '>=6.24.0'
+  'minimatch': '>=3.1.4'
+  'minimatch@9': '>=9.0.7'
+  'serialize-javascript': '>=7.0.5'
+  'ajv@8': '>=8.18.0'
+  'flatted': '>=3.4.2'
+  'handlebars': '>=4.7.9'
+  'yaml': '>=2.8.3'
+  'brace-expansion': '>=1.1.13'
+  'fast-uri': '>=3.1.2'
+  'picomatch': '>=2.3.2'
+  'semver': '>=7.0.0'
 
 minimumReleaseAgeExclude:
   # internal libs
@@ -35,6 +57,18 @@ minimumReleaseAgeExclude:
   - 'minimatch@9.0.7' # Required for vulnerabiliti mitigation. Remove after 25/04/26
   - 'flatted@3.3.4' # Required for vulnerabiliti mitigation. Remove after 25/04/26
   - 'serialize-javascript@7.0.3' # Required for vulnerabiliti mitigation. Remove after 25/04/26
+  - 'fastq@1.20.1'
+  - 'enhanced-resolve@5.18.4'
+  - 'lodash@4.17.23'
+  - '@sinclair/typebox@0.34.45'
+  - 'baseline-browser-mapping@2.9.11'
+  - 'baseline-browser-mapping@2.10.29'
+  - 'electron-to-chromium@1.5.267'
+  - 'caniuse-lite@1.0.30001761'
+  - '@types/node@25.0.3'
+  - 'dedent@1.7.1'
+  - 'webpack@5.104.1'
+  - 'minimatch@3.1.3'
 
 allowBuilds:
   core-js-pure: true
