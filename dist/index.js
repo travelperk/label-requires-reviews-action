@@ -116,23 +116,23 @@ exports.findRepositoryInformation = findRepositoryInformation;
 // Get the current approver count from an issue
 const getCurrentReviewCount = async (pullsListReviewsParams, client) => {
     return client
-        .paginate(client.pulls.listReviews, pullsListReviewsParams)
+        .paginate(client.pulls.listReviews, Object.assign(Object.assign({}, pullsListReviewsParams), { per_page: 100 }))
         .then((reviews) => {
-        const approvers = [];
+        var _a;
+        const userReviewStates = new Map();
         for (const review of reviews) {
-            if (review.state === 'APPROVED' &&
-                !approvers.includes(review.user.id)) {
-                approvers.push(review.user.id);
-            }
-            else if (review.state === 'CHANGES_REQUESTED' &&
-                approvers.includes(review.user.id)) {
-                const index = approvers.indexOf(review.user.id);
-                if (index !== -1) {
-                    approvers.splice(index, 1);
-                }
+            if (((_a = review.user) === null || _a === void 0 ? void 0 : _a.id) &&
+                ['APPROVED', 'CHANGES_REQUESTED', 'DISMISSED'].includes(review.state)) {
+                userReviewStates.set(review.user.id, review.state);
             }
         }
-        return approvers.length;
+        let approversCount = 0;
+        for (const state of userReviewStates.values()) {
+            if (state === 'APPROVED') {
+                approversCount++;
+            }
+        }
+        return approversCount;
     });
 };
 exports.getCurrentReviewCount = getCurrentReviewCount;
