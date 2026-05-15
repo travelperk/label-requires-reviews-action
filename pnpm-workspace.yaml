@@ -35,6 +35,8 @@ overrides:
   'serialize-javascript': '>=7.0.5'
   'ajv@8': '>=8.18.0'
   'ajv@6': '>=6.14.0'
+  '@eslint/eslintrc>ajv': '>=8.18.0'
+  'eslint>ajv': '>=8.18.0'
   'flatted': '>=3.4.2'
   'handlebars': '>=4.7.9'
   'yaml': '>=2.8.3'
