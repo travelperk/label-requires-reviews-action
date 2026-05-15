@@ -25,8 +25,6 @@ overrides:
   picomatch: '>=4.0.4'
   semver: '>=7.0.0'
 
-pnpmfileChecksum: sha256-Z8C6JxVG+djz20y4r2+s+jksHKCipmaRBkYYoC6mbK8=
-
 importers:
 
   .:
@@ -2051,10 +2049,6 @@ packages:
 
   safer-buffer@2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==, tarball: https://registry.npmjs.org/safer-buffer/-/safer-buffer-2.1.2.tgz}
-
-  schema-utils@4.3.2:
-    resolution: {integrity: sha512-Gn/JaSk/Mt9gYubxTtSn/QCV4em9mpAPiR1rqy/Ocu19u/G9J5WWdNoUT4SiV6mFC3y6cxyFcFwdzPM3FgxGAQ==, tarball: https://registry.npmjs.org/schema-utils/-/schema-utils-4.3.2.tgz}
-    engines: {node: '>= 10.13.0'}
 
   schema-utils@4.3.3:
     resolution: {integrity: sha512-eflK8wEtyOE6+hsaRVPxvUKYCpRgzLqDTb8krvAsRIwOGlHoSgYLgBXoubGgLd2fT41/OUYdb48v4k4WWHQurA==, tarball: https://registry.npmjs.org/schema-utils/-/schema-utils-4.3.3.tgz}
@@ -4780,13 +4774,6 @@ snapshots:
 
   safer-buffer@2.1.2: {}
 
-  schema-utils@4.3.2:
-    dependencies:
-      '@types/json-schema': 7.0.15
-      ajv: 8.18.0
-      ajv-formats: 2.1.1(ajv@8.18.0)
-      ajv-keywords: 5.1.0(ajv@8.18.0)
-
   schema-utils@4.3.3:
     dependencies:
       '@types/json-schema': 7.0.15
@@ -4933,7 +4920,7 @@ snapshots:
     dependencies:
       '@jridgewell/trace-mapping': 0.3.29
       jest-worker: 27.5.1
-      schema-utils: 4.3.2
+      schema-utils: 4.3.3
       serialize-javascript: 7.0.5
       terser: 5.43.1
       webpack: 5.104.1
