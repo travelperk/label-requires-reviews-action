@@ -1,0 +1,82 @@
+# Custom gitleaks configuration file for Perk.
+# Title for the gitleaks configuration file.
+title = "Gitleaks x Perk"
+
+[extend]
+# useDefault will extend the base configuration with the default gitleaks config:
+# https://github.com/zricethezav/gitleaks/blob/master/config/gitleaks.toml
+useDefault = true
+
+# This is a global allowlist which has a higher order of precedence than rule-specific allowlists.
+# If a commit listed in the `commits` field below is encountered then that commit will be skipped and no
+# secrets will be detected for said commit. The same logic applies for regexes and paths.
+[allowlist]
+description = "global allow list"
+paths = [
+  # Tests
+  '''\/test\/''',
+  '''\/tests\/''',
+  '''\/Test\/''',
+  '''\/Tests\/''',
+  '''\/UITests\/''',
+  '''\/fixtures\/''',
+  '''\/.test\/''',
+  '''\/.tests\/''',
+  # Directories
+  '''.github\/''',
+  '''.security_pipeline\/''',
+  '''cypres\/''',
+  '''lint\/''',
+  '''pre-commit-hooks\/''',
+  '''static\/''',
+  '''locale\/''',
+  # Files
+  '''.coveragerc''',
+  '''.dockerignore''',
+  '''.gitignore''',
+  '''.gitmodules''',
+  '''NOTICE''',
+  '''.nvmrc''',
+  '''.pre-commit-config.yaml''',
+  '''.prettierrc.js''',
+  '''.sonarcloud.properties''',
+  '''CODEOWNERS''',
+  '''CONTRIBUTORS.txt''',
+  '''cypress.json''',
+  '''known_mypy_errors.json''',
+  '''LICENSE.txt''',
+  '''mypy.ini''',
+  '''.semgrepignore''',
+  '''.trivyignore.yaml''',
+  # Extensions
+  '''.*\.(jpg|png|jpeg|gif|ico|css|doc|docx|zip|xls|pdf|bin|svg|socket|vsidx|v2|suo|wsuo|dll|pdb|exe|woff|woff2|eot|ttf|otf)$''',]
+
+[[rules]]
+id = "generic-password-field"
+description = "Generic password field with non-trivial value in config/data files"
+# Matches: "password": "value", password = value, password: value (JSON, YAML, INI, TOML)
+regex = '''(?i)[\"']?password[\"']?\s*[:=]\s*[\"']?([^\"'\s]{6,})[\"']?'''
+secretGroup = 1
+entropy = 2.0
+keywords = ["password"]
+
+  [rules.allowlist]
+  description = "Common placeholder and non-secret values"
+  regexes = ['''(?i)(placeholder|changeme|your.?password|password.?here|example|dummy|fake|x{4,}|to.?be.?set|insert.?here|redacted|not.?set|none|null|empty)''']
+
+[[rules]]
+id = "postman-password-variable"
+description = "Password variable value in Postman collection or environment file"
+# Matches Postman's split key/value format: "key": "password", ... "value": "secret"
+regex = '''(?i)"key"\s*:\s*"[^"]*password[^"]*"[\s\S]{0,200}?"value"\s*:\s*"([^"]{6,})"'''
+secretGroup = 1
+entropy = 2.0
+multiline = true
+keywords = ["password"]
+
+  [rules.allowlist]
+  description = "Postman variable references and common placeholder values"
+  regexes = [
+    '''\{\{[^}]+\}\}''',
+    '''(?i)(placeholder|changeme|your.?password|password.?here|example|dummy|fake|x{4,}|to.?be.?set|insert.?here|redacted|not.?set|none|null|empty)''',
+  ]

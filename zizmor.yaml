@@ -1,0 +1,14 @@
+---
+# zizmor configuration — https://woodruffw.github.io/zizmor/configuration/
+# Per-finding ignores for the security pipeline's own workflows.
+
+rules:
+  secrets-outside-env:
+    ignore:
+      # The GitHub App credentials (SECURITY_PIPELINE_APPLICATION_ID / PEM) are
+      # required in every job to mint scoped tokens for the target repository and
+      # for security_pipeline itself. Adding a named GitHub Environment to gate
+      # these steps would block normal pipeline operation; the App and its secrets
+      # are managed exclusively by the security team and are not accessible to PR
+      # authors of consumer repositories.
+      - security_pipeline.yml

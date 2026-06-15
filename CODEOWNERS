@@ -1,0 +1,20 @@
+###############################################################################
+# The structure of the document is:                                           #
+# Apps                                                                        #
+#   - folders                                                                 #
+#   - files divided by squad                                                  #
+# To add a new entry look for the app you are modifying, if you are adding a  #
+# folder add it on top else add it to your squad section                      #
+###############################################################################
+
+
+# ---- No Owner ----
+
+# ---- Outside apps ----
+
+# Squad security
+* @travelperk/squad-prodsec
+
+# TK Major Bump Check (Flights squad)
+scripts/commit/tk_major_bump_check.py @travelperk/squad-prodsec @travelperk/squad-flights
+tests/ @travelperk/squad-prodsec @travelperk/squad-flights

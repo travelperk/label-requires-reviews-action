@@ -1,0 +1,60 @@
+# Custom Semgrep configuration file for Perk.
+
+:include .gitignore
+
+# Ignore general folders
+cypress/
+lint/
+pre-commit-hooks/
+locale/
+
+tests/
+tests-e2e/
+test/
+**/test-e2e/
+**/tests/
+**/test/
+**/fixtures/
+
+# Ignore general files
+.coveragerc
+.gitignore
+.gitmodules
+NOTICE
+.dockerignore
+.nvmrc
+.pre-commit-config.yaml
+.prettierrc.js
+.semgrepignore
+.sonarcloud.properties
+CODEOWNERS
+CONTRIBUTORS.txt
+cypress.json
+known_mypy_errors.json
+LICENSE.txt
+mypy.ini
+.trivyignore.yaml
+.gitleaks.toml
+
+
+# Ignore specific files
+*.svg
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.ico
+*.woff
+*.woff2
+*.eot
+*.ttf
+*.otf
+*.pdf
+*.css
+*.md
+
+# Semgrep rules folder
+.semgrep
+
+# Security pipeline
+.*/security_pipeline/.*
