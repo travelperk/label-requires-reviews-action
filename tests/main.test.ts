@@ -101,6 +101,14 @@ describe('getCurrentReviewCount', () => {
       }
   )
 
+  it('should not count bot reviews', async () => {
+      (client.pulls.listReviews as jest.Mock).mockResolvedValue([
+          {state: "APPROVED", user: {id: 1, type: "User"}},
+          {state: "APPROVED", user: {id: 2, type: "Bot"}},
+      ]);
+      expect(await getCurrentReviewCount(LIST_REVIEWS_PARAMS, client)).toStrictEqual(1)
+  })
+
   it('should return 0 if there are no reviews', async () => {
       (client.pulls.listReviews as jest.Mock).mockResolvedValue([]);
       expect(await getCurrentReviewCount(LIST_REVIEWS_PARAMS, client)).toStrictEqual(0)

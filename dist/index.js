@@ -1,145 +1,6 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 4561:
-/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
-
-"use strict";
-
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-const main_1 = __nccwpck_require__(7666);
-const actions_toolkit_1 = __nccwpck_require__(2288);
-const js_yaml_1 = __importDefault(__nccwpck_require__(4281));
-const fs_1 = __importDefault(__nccwpck_require__(9896));
-const args = {
-    token: process.env.token,
-    event: [
-        'pull_request.opened',
-        'pull_request.reopened',
-        'pull_request.labeled',
-        'pull_request.unlabeled',
-        'pull_request.synchronize',
-        'pull_request_target.opened',
-        'pull_request_target.reopened',
-        'pull_request_target.labeled',
-        'pull_request_target.unlabeled',
-        'pull_request_target.synchronize',
-        'pull_request_review.submitted',
-        'pull_request_review.edited',
-        'pull_request_review.dismissed',
-    ],
-    secrets: ['token'],
-};
-actions_toolkit_1.Toolkit.run(async (toolkit) => {
-    var _a;
-    toolkit.log.info('Running Action');
-    const configPath = (_a = process.env.CONFIG_PATH) !== null && _a !== void 0 ? _a : '.github/label-requires-reviews.yml';
-    const rules = [];
-    const parseYamlRules = (rulesYaml) => {
-        const rulesObject = js_yaml_1.default.load(rulesYaml);
-        if (Array.isArray(rulesObject)) {
-            return rulesObject;
-        }
-        else {
-            return Object.entries(rulesObject).map(([key, value]) => {
-                return { label: key, reviews: value };
-            });
-        }
-    };
-    if (toolkit.inputs.rules_yaml) {
-        rules.push(...parseYamlRules(toolkit.inputs.rules_yaml));
-    }
-    if (fs_1.default.existsSync(configPath)) {
-        rules.push(...parseYamlRules(fs_1.default.readFileSync(configPath, 'utf8')));
-    }
-    toolkit.log.info('Configured rules: ', rules);
-    // Get the repository information
-    if (!process.env.GITHUB_EVENT_PATH) {
-        toolkit.exit.failure('Process env GITHUB_EVENT_PATH is undefined');
-    }
-    const { owner, issue_number, repo } = (0, main_1.findRepositoryInformation)(process.env.GITHUB_EVENT_PATH, toolkit.log, toolkit.exit);
-    const client = toolkit.github;
-    // Get the list of configuration rules for the labels on the issue
-    const matchingRules = await (0, main_1.getRulesForLabels)({ owner, issue_number, repo }, client, rules);
-    toolkit.log.info('Matching rules: ', matchingRules);
-    // Get the required number of required reviews from the rules
-    const requiredReviews = (0, main_1.getMaxReviewNumber)(matchingRules);
-    // Get the actual number of reviews from the issue
-    const reviewCount = await (0, main_1.getCurrentReviewCount)({ owner, pull_number: issue_number, repo }, client);
-    if (reviewCount < requiredReviews) {
-        toolkit.exit.failure(`Labels require ${requiredReviews} reviews but the PR only has ${reviewCount}`);
-    }
-    toolkit.exit.success(`Labels require ${requiredReviews} the PR has ${reviewCount}`);
-}, args);
-//# sourceMappingURL=entrypoint.js.map
-
-/***/ }),
-
-/***/ 7666:
-/***/ ((__unused_webpack_module, exports) => {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.getCurrentReviewCount = exports.findRepositoryInformation = exports.getMaxReviewNumber = exports.getRulesForLabels = void 0;
-// Get the maximum number of reviews based on the configuration and the issue labels
-const getRulesForLabels = async (issuesListLabelsOnIssueParams, client, rules) => {
-    return client.issues
-        .listLabelsOnIssue(issuesListLabelsOnIssueParams)
-        .then(({ data: labels }) => {
-        return labels.reduce((acc, label) => acc.concat(label.name), []);
-    })
-        .then((issueLabels) => rules.filter((rule) => issueLabels.includes(rule.label)));
-};
-exports.getRulesForLabels = getRulesForLabels;
-// Get the maximum number of reviews based on the configuration and the issue labels
-const getMaxReviewNumber = (rules) => rules.reduce((acc, rule) => (rule.reviews > acc ? rule.reviews : acc), 0);
-exports.getMaxReviewNumber = getMaxReviewNumber;
-// Returns the repository information using provided gitHubEventPath
-const findRepositoryInformation = (gitHubEventPath, log, exit) => {
-    var _a;
-    const payload = require(gitHubEventPath);
-    if (((_a = payload.pull_request) === null || _a === void 0 ? void 0 : _a.number) === undefined) {
-        exit.neutral('Action not triggered by a PullRequest review action. PR ID is missing');
-    }
-    log.info(`Checking labels for PR#${payload.pull_request.number}`);
-    return {
-        issue_number: payload.pull_request.number,
-        owner: payload.repository.owner.login,
-        repo: payload.repository.name,
-    };
-};
-exports.findRepositoryInformation = findRepositoryInformation;
-// Get the current approver count from an issue
-const getCurrentReviewCount = async (pullsListReviewsParams, client) => {
-    return client
-        .paginate(client.pulls.listReviews, Object.assign(Object.assign({}, pullsListReviewsParams), { per_page: 100 }))
-        .then((reviews) => {
-        var _a;
-        const userReviewStates = new Map();
-        for (const review of reviews) {
-            if (((_a = review.user) === null || _a === void 0 ? void 0 : _a.id) &&
-                ['APPROVED', 'CHANGES_REQUESTED', 'DISMISSED'].includes(review.state)) {
-                userReviewStates.set(review.user.id, review.state);
-            }
-        }
-        let approversCount = 0;
-        for (const state of userReviewStates.values()) {
-            if (state === 'APPROVED') {
-                approversCount++;
-            }
-        }
-        return approversCount;
-    });
-};
-exports.getCurrentReviewCount = getCurrentReviewCount;
-//# sourceMappingURL=main.js.map
-
-/***/ }),
-
 /***/ 4914:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -51335,6 +51196,147 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
+/***/ 781:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+const main_1 = __nccwpck_require__(1730);
+const actions_toolkit_1 = __nccwpck_require__(2288);
+const js_yaml_1 = __importDefault(__nccwpck_require__(4281));
+const fs_1 = __importDefault(__nccwpck_require__(9896));
+const args = {
+    token: process.env.token,
+    event: [
+        'pull_request.opened',
+        'pull_request.reopened',
+        'pull_request.labeled',
+        'pull_request.unlabeled',
+        'pull_request.synchronize',
+        'pull_request_target.opened',
+        'pull_request_target.reopened',
+        'pull_request_target.labeled',
+        'pull_request_target.unlabeled',
+        'pull_request_target.synchronize',
+        'pull_request_review.submitted',
+        'pull_request_review.edited',
+        'pull_request_review.dismissed',
+    ],
+    secrets: ['token'],
+};
+actions_toolkit_1.Toolkit.run(async (toolkit) => {
+    var _a;
+    toolkit.log.info('Running Action');
+    const configPath = (_a = process.env.CONFIG_PATH) !== null && _a !== void 0 ? _a : '.github/label-requires-reviews.yml';
+    const rules = [];
+    const parseYamlRules = (rulesYaml) => {
+        const rulesObject = js_yaml_1.default.load(rulesYaml);
+        if (Array.isArray(rulesObject)) {
+            return rulesObject;
+        }
+        else {
+            return Object.entries(rulesObject).map(([key, value]) => {
+                return { label: key, reviews: value };
+            });
+        }
+    };
+    if (toolkit.inputs.rules_yaml) {
+        rules.push(...parseYamlRules(toolkit.inputs.rules_yaml));
+    }
+    if (fs_1.default.existsSync(configPath)) {
+        rules.push(...parseYamlRules(fs_1.default.readFileSync(configPath, 'utf8')));
+    }
+    toolkit.log.info('Configured rules: ', rules);
+    // Get the repository information
+    if (!process.env.GITHUB_EVENT_PATH) {
+        toolkit.exit.failure('Process env GITHUB_EVENT_PATH is undefined');
+    }
+    const { owner, issue_number, repo } = (0, main_1.findRepositoryInformation)(process.env.GITHUB_EVENT_PATH, toolkit.log, toolkit.exit);
+    const client = toolkit.github;
+    // Get the list of configuration rules for the labels on the issue
+    const matchingRules = await (0, main_1.getRulesForLabels)({ owner, issue_number, repo }, client, rules);
+    toolkit.log.info('Matching rules: ', matchingRules);
+    // Get the required number of required reviews from the rules
+    const requiredReviews = (0, main_1.getMaxReviewNumber)(matchingRules);
+    // Get the actual number of reviews from the issue
+    const reviewCount = await (0, main_1.getCurrentReviewCount)({ owner, pull_number: issue_number, repo }, client);
+    if (reviewCount < requiredReviews) {
+        toolkit.exit.failure(`Labels require ${requiredReviews} reviews but the PR only has ${reviewCount}`);
+    }
+    toolkit.exit.success(`Labels require ${requiredReviews} the PR has ${reviewCount}`);
+}, args);
+
+
+/***/ }),
+
+/***/ 1730:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getCurrentReviewCount = exports.findRepositoryInformation = exports.getMaxReviewNumber = exports.getRulesForLabels = void 0;
+// Get the maximum number of reviews based on the configuration and the issue labels
+const getRulesForLabels = async (issuesListLabelsOnIssueParams, client, rules) => {
+    return client.issues
+        .listLabelsOnIssue(issuesListLabelsOnIssueParams)
+        .then(({ data: labels }) => {
+        return labels.reduce((acc, label) => acc.concat(label.name), []);
+    })
+        .then((issueLabels) => rules.filter((rule) => issueLabels.includes(rule.label)));
+};
+exports.getRulesForLabels = getRulesForLabels;
+// Get the maximum number of reviews based on the configuration and the issue labels
+const getMaxReviewNumber = (rules) => rules.reduce((acc, rule) => (rule.reviews > acc ? rule.reviews : acc), 0);
+exports.getMaxReviewNumber = getMaxReviewNumber;
+// Returns the repository information using provided gitHubEventPath
+const findRepositoryInformation = (gitHubEventPath, log, exit) => {
+    var _a;
+    const payload = require(gitHubEventPath);
+    if (((_a = payload.pull_request) === null || _a === void 0 ? void 0 : _a.number) === undefined) {
+        exit.neutral('Action not triggered by a PullRequest review action. PR ID is missing');
+        return {};
+    }
+    log.info(`Checking labels for PR#${payload.pull_request.number}`);
+    return {
+        issue_number: payload.pull_request.number,
+        owner: payload.repository.owner.login,
+        repo: payload.repository.name,
+    };
+};
+exports.findRepositoryInformation = findRepositoryInformation;
+// Get the current approver count from an issue
+const getCurrentReviewCount = async (pullsListReviewsParams, client) => {
+    return client
+        .paginate(client.pulls.listReviews, Object.assign(Object.assign({}, pullsListReviewsParams), { per_page: 100 }))
+        .then((reviews) => {
+        var _a, _b;
+        const userReviewStates = new Map();
+        for (const review of reviews) {
+            if (((_a = review.user) === null || _a === void 0 ? void 0 : _a.id) &&
+                ((_b = review.user) === null || _b === void 0 ? void 0 : _b.type) !== 'Bot' &&
+                ['APPROVED', 'CHANGES_REQUESTED', 'DISMISSED'].includes(review.state)) {
+                userReviewStates.set(review.user.id, review.state);
+            }
+        }
+        let approversCount = 0;
+        for (const state of userReviewStates.values()) {
+            if (state === 'APPROVED') {
+                approversCount++;
+            }
+        }
+        return approversCount;
+    });
+};
+exports.getCurrentReviewCount = getCurrentReviewCount;
+
+
+/***/ }),
+
 /***/ 2613:
 /***/ ((module) => {
 
@@ -52934,7 +52936,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"name":"signale","version":"1.4.0","d
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __nccwpck_require__(4561);
+/******/ 	var __webpack_exports__ = __nccwpck_require__(781);
 /******/ 	module.exports = __webpack_exports__;
 /******/ 	
 /******/ })()
