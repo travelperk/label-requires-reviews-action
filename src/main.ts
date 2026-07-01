@@ -65,6 +65,7 @@ export const getCurrentReviewCount = async (
       for (const review of reviews) {
         if (
           review.user?.id &&
+          review.user?.type !== 'Bot' &&
           ['APPROVED', 'CHANGES_REQUESTED', 'DISMISSED'].includes(review.state)
         ) {
           userReviewStates.set(review.user.id, review.state)
