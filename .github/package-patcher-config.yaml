@@ -1,0 +1,47 @@
+# This file is meant to give owner's per-repo config settings on how package-patcher should behave
+# Keys should not be changed. Accepted / not accepted entries are also listed
+# For any new features please reach out to #ask-product-security
+
+# Version should be bumped if new key-value pair is added / removed, or if a key changes name
+version: 2
+
+# Skip these packages (may still be upgraded if transitive)
+# ([] accepted)
+doNotUpgradePackages:
+  - ddtrace
+  - pandas
+
+# Should auto merging be allowed when passing checks
+# (true | false accepted)
+automergeEnabled: true
+
+# Max number of PRs package patcher will keep open
+# (0 not accepted)
+maxNumberOfOpenPRs: 10
+
+# Do not put following packages in a range (e.g., >=,<), only ==
+# ([] accepted)
+pinnedPackages:
+  - tk-redis
+
+# Should claude be called when compilation fails
+# (true | false accepted)
+claudeInvocationsEnabled: true
+
+# Service directories that should not be updated (for monorepos)
+# (* not accepted, [] accepted)
+excludeFromPatchingServiceDirectoriesPath:
+  - serviceName/*
+
+# PRs should be auto-closed after this amount of days
+# (0 | greater than 10 not accepted)
+maxBranchAgeInDays: 7
+
+# What days the tool should run (patching+merging)
+# Meant to reduce notification spam for codeowners that own many repos
+# (Friday | Saturday | Sunday | [] not accepted)
+daysToRun:
+  - Monday
+  - Tuesday
+  - Wednesday
+  - Thursday
